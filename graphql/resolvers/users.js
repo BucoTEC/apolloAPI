@@ -1,15 +1,22 @@
 const User = require('../../models/userModel')
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
+const {UserInputError} = require('apollo-server')
 const tajna = process.env.SECRET || 'ovojemojatajnahahah'
+
+
 module.exports ={
     Mutation:{
         async register(_, {
             registerInput: 
             { 
             username, password, email, confirmPassword}},
-             context, 
-             info){
+             ){
+
+                const user = await User.findOne({username})
+                if(user){
+                    throw new UserInputError('User already exists')
+                }
                 const hashedPassword = await bcrypt.hash(password, 12)
                 const newUser = new User({
                     username,
