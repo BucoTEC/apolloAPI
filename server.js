@@ -1,6 +1,7 @@
 const {ApolloServer} = require('apollo-server')
 const gql  = require('graphql-tag')
 const mongoose = require('mongoose');
+require('dotenv').config()
 
 const db = process.env.MONGO_URL || 'mongodb://localhost:27017/apollo'
 mongoose.connect(db).then(()=>{console.log('connection to db is open');}).catch(err => console.log(err))
