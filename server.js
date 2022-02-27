@@ -12,7 +12,8 @@ mongoose.connect(db).then(()=>{console.log('connection to db is open');}).catch(
 
 const server = new ApolloServer({
     typeDefs,
-    resolvers
+    resolvers,
+    context: ({req})=>({req})
 })
 
 const port = process.env.PORT || 5000
