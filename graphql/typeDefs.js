@@ -25,10 +25,12 @@ const typeDefs = gql`
         token: String!
         username: String!
         createdAt: String!
+        posts:[Post]
     }
     type Query{
-        allPosts : [Post]
+        allPosts:[Post]
         getPost(postId: ID!):Post
+        getAllUsers:[User]
     }
     input registerInput{
         username: String!
@@ -45,6 +47,7 @@ const typeDefs = gql`
         createComment(postId: String!, body: String!): Post!
         deleteComment(postId: ID!, commentId: ID!): Post!
         likePost(postId: ID!): Post!
+        getSingleUser(userId: ID!): User!
     }
 `
 
