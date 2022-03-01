@@ -1,5 +1,6 @@
 const Post = require('../../models/postModel')
 const checkAuth = require('../../utils/check-auth')
+const {AuthenticationError} = require("apollo-server")
 const resolvers = {
     Query:{
         allPosts: async ()=> {
@@ -44,21 +45,21 @@ const resolvers = {
             
                     return post;
                 },
-                // async deletePost(_, { postId }, context) {
-                //   const user = checkAuth(context);
+                async deletePost(_, { postId }, context) {
+                  const user = checkAuth(context);
             
-                //   try {
-                //     const post = await Post.findById(postId);
-                //     if (user.username === post.username) {
-                //       await post.delete();
-                //       return 'Post deleted successfully';
-                //     } else {
-                //       throw new AuthenticationError('Action not allowed');
-                //     }
-                //   } catch (err) {
-                //     throw new Error(err);
-                //   }
-                // }
+                  try {
+                    const post = await Post.findById(postId);
+                    if (user.username === post.username) {
+                      await post.delete();
+                      return 'Post deleted successfully';
+                    } else {
+                      throw new AuthenticationError('Action not allowed');
+                    }
+                  } catch (err) {
+                    throw new Error(err);
+                  }
+                }
     }
    
 }
