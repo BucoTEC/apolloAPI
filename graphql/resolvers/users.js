@@ -18,6 +18,14 @@ function generateToken(user) {
 
 module.exports ={
     Query:{
+      async getUser(_,{userId}){
+        try {
+          return await User.findById(userId)
+        } catch (error) {
+          console.log(error);
+        }
+
+      },
       async getAllUsers(){
         try {
           return await User.find()
@@ -93,16 +101,8 @@ module.exports ={
         id: user._id,
         token
       };
-        },
-
-      async getSingleUser(_,args){
-        const {userId} = args.userId
-        const user  = await User.findById(userId)
-        if(!user){
-          return new UserInputError('No user found')
         }
-        return user
 
-      }
+      
     }
 }

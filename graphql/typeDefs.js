@@ -31,6 +31,7 @@ const typeDefs = gql`
         allPosts:[Post]
         getPost(postId: ID!):Post
         getAllUsers:[User]
+        getUser(userId: ID!): User
     }
     input registerInput{
         username: String!
@@ -47,7 +48,6 @@ const typeDefs = gql`
         createComment(postId: String!, body: String!): Post!
         deleteComment(postId: ID!, commentId: ID!): Post!
         likePost(postId: ID!): Post!
-        getSingleUser(userId: ID!): User!
     }
 `
 
