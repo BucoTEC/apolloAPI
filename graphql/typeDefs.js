@@ -1,11 +1,11 @@
-const gql  = require('graphql-tag')
+const {gql}  = require('apollo-server')
 
 const typeDefs = gql`
     type Post{
         id: ID!
         body: String!,
         username: String!
-        commenst: [Comment!]!
+        comments: [Comment]!
         likes: [Like]!
     }
     type Comment {
@@ -45,7 +45,7 @@ const typeDefs = gql`
         login(username: String!, password: String!): User!
         createPost(body:String!):Post!
         deletePost(postId:ID!): String!
-        createComment(postId: String!, body: String!): Post!
+        createComment(postId: ID!, body: String!): Post!
         deleteComment(postId: ID!, commentId: ID!): Post!
         likePost(postId: ID!): Post!
     }
