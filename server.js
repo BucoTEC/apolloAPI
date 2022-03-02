@@ -2,6 +2,7 @@ const {ApolloServer} = require('apollo-server')
 const mongoose = require('mongoose');
 const typeDefs = require('./graphql/typeDefs')
 const resolvers = require('./graphql/resolvers')
+const {ApolloServerPluginLandingPageGraphQLPlayground} = require('apollo-server-core')
 require('dotenv').config()
 
 const db = process.env.MONGO_URL || 'mongodb://localhost:27017/apollo'
@@ -13,7 +14,10 @@ mongoose.connect(db).then(()=>{console.log('connection to db is open');}).catch(
 const server = new ApolloServer({
     typeDefs,
     resolvers,
-    context: ({req})=>({req})
+    context: ({req})=>({req}),
+    plugins: [
+        ApolloServerPluginLandingPageGraphQLPlayground(),
+      ],
 })
 
 const port = process.env.PORT || 5000
